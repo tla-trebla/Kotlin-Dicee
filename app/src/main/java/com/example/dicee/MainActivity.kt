@@ -52,7 +52,7 @@ fun MainColumn() {
         LogoImage()
         Row {
             DiceImage(number = 1)
-            DiceImage(number = 2)
+            DiceImage(number = 6)
         }
     }
 }
@@ -67,11 +67,17 @@ fun LogoImage() {
 
 @Composable
 fun DiceImage(number: Int) {
-    val context = LocalContext.current
-    val name = "dice$number"
-    val drawableId = context.resources.getIdentifier(name, "drawable", context.packageName)
+    val resourceId = when(number) {
+        1 -> R.drawable.dice1
+        2 -> R.drawable.dice2
+        3 -> R.drawable.dice3
+        4 -> R.drawable.dice4
+        5 -> R.drawable.dice5
+        6 -> R.drawable.dice6
+        else -> throw IllegalArgumentException("Dice with number $number doesn't exist. It should between 1 and 6.")
+    }
     Image(
-        painter = painterResource(id = drawableId),
+        painter = painterResource(id = resourceId),
         contentDescription = "Dice image of number $number"
     )
 }
