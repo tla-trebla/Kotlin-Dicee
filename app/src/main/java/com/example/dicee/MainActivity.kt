@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.dicee.ui.theme.DiceeTheme
@@ -48,6 +50,10 @@ fun BackgroundBox() {
 fun MainColumn() {
     Column {
         LogoImage()
+        Row {
+            DiceImage(number = 1)
+            DiceImage(number = 2)
+        }
     }
 }
 
@@ -56,6 +62,17 @@ fun LogoImage() {
     Image(
         painter = painterResource(id = R.drawable.diceelogo),
         contentDescription = "Dicee Logo"
+    )
+}
+
+@Composable
+fun DiceImage(number: Int) {
+    val context = LocalContext.current
+    val name = "dice$number"
+    val drawableId = context.resources.getIdentifier(name, "drawable", context.packageName)
+    Image(
+        painter = painterResource(id = drawableId),
+        contentDescription = "Dice image of number $number"
     )
 }
 
