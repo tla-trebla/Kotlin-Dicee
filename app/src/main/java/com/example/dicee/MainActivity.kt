@@ -14,6 +14,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
@@ -22,8 +27,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.dicee.ui.theme.DiceeTheme
+import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -51,13 +58,22 @@ fun BackgroundBox() {
 
 @Composable
 fun MainColumn() {
+    var firstDice by remember { mutableIntStateOf(1) }
+    var secondDice by remember { mutableIntStateOf(1) }
+
     Column {
         LogoImage()
         Row {
-            DiceImage(number = 1)
-            DiceImage(number = 6)
+            DiceImage(number = firstDice)
+            DiceImage(number = secondDice)
         }
-        RollButton()
+        RollButton(onClick = {
+            firstDice = (1..6).random()
+            secondDice = (1..6).random()
+
+            print("First dice: $firstDice")
+            print("Second dice: $secondDice")
+        })
     }
 }
 
@@ -87,13 +103,13 @@ fun DiceImage(number: Int) {
 }
 
 @Composable
-fun RollButton() {
+fun RollButton(onClick: () -> Unit) {
     val buttonColors = ButtonDefaults.buttonColors(
         containerColor = Color.Red,
         contentColor = Color.White
     )
     Button(
-        onClick = { /*TODO Randomize the Number*/ },
+        onClick = onClick,
         colors = buttonColors) {
         Text(text = "Roll")
     }
