@@ -8,12 +8,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -54,6 +57,7 @@ fun MainColumn() {
             DiceImage(number = 1)
             DiceImage(number = 6)
         }
+        RollButton()
     }
 }
 
@@ -80,6 +84,19 @@ fun DiceImage(number: Int) {
         painter = painterResource(id = resourceId),
         contentDescription = "Dice image of number $number"
     )
+}
+
+@Composable
+fun RollButton() {
+    val buttonColors = ButtonDefaults.buttonColors(
+        containerColor = Color.Red,
+        contentColor = Color.White
+    )
+    Button(
+        onClick = { /*TODO Randomize the Number*/ },
+        colors = buttonColors) {
+        Text(text = "Roll")
+    }
 }
 
 @Preview(showBackground = true)
